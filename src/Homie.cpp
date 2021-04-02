@@ -3,7 +3,7 @@
 using namespace HomieInternals;
 
 HomieClass::HomieClass()
-    : _setupCalled(false), _firmwareSet(false), __HOMIE_SIGNATURE("\x25\x48\x4f\x4d\x49\x45\x5f\x45\x53\x50\x38\x32\x36\x36\x5f\x46\x57\x25")
+    : _configLoaded(false), _setupCalled(false), _firmwareSet(false), __HOMIE_SIGNATURE("\x25\x48\x4f\x4d\x49\x45\x5f\x45\x53\x50\x38\x32\x36\x36\x5f\x46\x57\x25")
 {
   strlcpy(Interface::get().brand, DEFAULT_BRAND, MAX_BRAND_LENGTH);
   Interface::get().bootMode = HomieBootMode::UNDEFINED;
@@ -72,6 +72,11 @@ void HomieClass::loadConfigEarly()
   {
     Helpers::abort(F("✖ Settings exceed set limit of elelement."));
     return; // never reached, here for clarity
+  }
+  if (_configLoaded)
+  {
+    // did it already
+    return;
   }
 
   // Check if default settings values are valid

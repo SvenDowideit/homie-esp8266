@@ -84,6 +84,7 @@ namespace HomieInternals
 
   private:
     bool _setupCalled;
+    bool _configLoaded;
     bool _firmwareSet;
     Boot *_boot;
     BootStandalone _bootStandalone;
